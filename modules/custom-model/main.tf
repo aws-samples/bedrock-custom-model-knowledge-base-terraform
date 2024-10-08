@@ -8,7 +8,7 @@ resource "terraform_data" "training_data_fine_tune_v1" {
   input = "banking_qa.jsonl"
 
   provisioner "local-exec" {
-    command = "pip3 install datasets && python ${path.module}/banking_qa"
+    command = "pip3 install datasets && python ${path.module}/bank_qa.py"
   }
 }
 
