@@ -1,0 +1,20 @@
+.DS_Store
+.idea
+.venv
+
+# Local .terraform directories
+**/.terraform/*
+**/.terraform
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
