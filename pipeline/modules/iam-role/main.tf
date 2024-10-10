@@ -75,24 +75,12 @@ resource "aws_iam_policy" "codepipeline_policy" {
       ],
       "Resource": "${var.kms_key_arn}"
     },
-    {
-      "Effect": "Allow",
-      "Action": [
-         "codecommit:GitPull",
-         "codecommit:GitPush",
-         "codecommit:GetBranch",
-         "codecommit:CreateCommit",
-         "codecommit:ListRepositories",
-         "codecommit:BatchGetCommits",
-         "codecommit:BatchGetRepositories",
-         "codecommit:GetCommit",
-         "codecommit:GetRepository",
-         "codecommit:GetUploadArchiveStatus",
-         "codecommit:ListBranches",
-         "codecommit:UploadArchive"
-      ],
-      "Resource": "arn:aws:codecommit:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:${var.source_repository_name}"
-    },
+    		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Action": "codestar-connections:*",
+			"Resource": "*"
+		},
     {
       "Effect": "Allow",
       "Action": [

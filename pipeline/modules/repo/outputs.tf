@@ -6,5 +6,5 @@
 
 output "connection_arn" {
   value       = aws_codestarconnections_connection.bedrock-cn.arn
-  description = "List containing the arn of the CodeCommit repositories"
+  description = "List containing the arn of the Repository"
 }
