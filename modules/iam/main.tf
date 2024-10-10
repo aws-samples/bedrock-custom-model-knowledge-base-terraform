@@ -1,4 +1,4 @@
-resource "aws_iam_role" "bedrock_kb_hashicorp_kb" {
+resource "aws_iam_role" "bedrock_kb_sample_kb" {
   name = "AmazonBedrockExecutionRoleForKnowledgeBase_${var.kb_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -22,9 +22,9 @@ resource "aws_iam_role" "bedrock_kb_hashicorp_kb" {
   })
 }
 
-resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_model" {
+resource "aws_iam_role_policy" "bedrock_kb_sample_kb_model" {
   name = "AmazonBedrockFoundationModelPolicyForKnowledgeBase_${var.kb_name}"
-  role = aws_iam_role.bedrock_kb_hashicorp_kb.name
+  role = aws_iam_role.bedrock_kb_sample_kb.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -37,9 +37,9 @@ resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_model" {
   })
 }
 
-resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_s3" {
+resource "aws_iam_role_policy" "bedrock_kb_sample_kb_s3" {
   name = "AmazonBedrockS3PolicyForKnowledgeBase_${var.kb_name}"
-  role = aws_iam_role.bedrock_kb_hashicorp_kb.name
+  role = aws_iam_role.bedrock_kb_sample_kb.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -65,7 +65,7 @@ resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_s3" {
 
 
 #Action group Lambda execution role
-resource "aws_iam_role" "lambda_hashicorp_api" {
+resource "aws_iam_role" "lambda_sample_api" {
   name = "FunctionExecutionRoleForLambda_${var.action_group_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

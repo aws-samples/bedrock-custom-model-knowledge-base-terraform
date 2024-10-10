@@ -1,19 +1,19 @@
 variable "kb_name" {
   description = "The knowledge base name."
   type        = string
-  default     = "hashicorp"
+  default     = "sample"
 }
 
 variable "agent_name" {
   description = "The agent name."
   type        = string
-  default     = "hashicorpAssistant"
+  default     = "sampleAssistant"
 }
 
 variable "action_group_name" {
   description = "The action group name."
   type        = string
-  default     = "hashicorpAPI"
+  default     = "sampleAPI"
 }
 
 variable "lambda_iam_policy" {

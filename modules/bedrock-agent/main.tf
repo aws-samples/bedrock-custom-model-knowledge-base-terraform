@@ -1,11 +1,11 @@
-resource "awscc_bedrock_agent" "hashicorp_asst" {
+resource "awscc_bedrock_agent" "sample_asst" {
   agent_name              = var.agent_name
-  description             = "hashicorp agent configuration"
-  agent_resource_role_arn = aws_iam_role.bedrock_agent_hashicorp_asst.arn
+  description             = "sample agent configuration"
+  agent_resource_role_arn = aws_iam_role.bedrock_agent_sample_asst.arn
   foundation_model        = data.aws_bedrock_foundation_model.agent.model_id
   instruction             = file("${path.module}/instruction.txt")
   knowledge_bases = [{
-    description          = "hashicorp knowledge base"
+    description          = "sample knowledge base"
     knowledge_base_id    = var.kb_id
     knowledge_base_state = "ENABLED"
   }]
@@ -20,8 +20,8 @@ resource "awscc_bedrock_agent" "hashicorp_asst" {
     description       = var.action_group_desc
     function_schema = {
       functions = [{
-        name        = "hashicorp-function"
-        description = "Hashicorp function"
+        name        = "sample-function"
+        description = "sample function"
         parameters = {
           param1 = {
             type        = "string"
@@ -52,7 +52,7 @@ resource "awscc_bedrock_agent" "hashicorp_asst" {
 }
 
 # Agent resource role
-resource "aws_iam_role" "bedrock_agent_hashicorp_asst" {
+resource "aws_iam_role" "bedrock_agent_sample_asst" {
   name = "AmazonBedrockExecutionRoleForAgents_${var.agent_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -76,9 +76,9 @@ resource "aws_iam_role" "bedrock_agent_hashicorp_asst" {
   })
 }
 
-resource "aws_iam_role_policy" "bedrock_agent_hashicorp_asst_model" {
+resource "aws_iam_role_policy" "bedrock_agent_sample_asst_model" {
   name = "AmazonBedrockAgentBedrockFoundationModelPolicy_${var.agent_name}"
-  role = aws_iam_role.bedrock_agent_hashicorp_asst.name
+  role = aws_iam_role.bedrock_agent_sample_asst.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -91,9 +91,9 @@ resource "aws_iam_role_policy" "bedrock_agent_hashicorp_asst_model" {
   })
 }
 
-resource "aws_iam_role_policy" "bedrock_agent_hashicorp_asst_kb" {
+resource "aws_iam_role_policy" "bedrock_agent_sample_asst_kb" {
   name = "AmazonBedrockAgentBedrockKnowledgeBasePolicy_${var.agent_name}"
-  role = aws_iam_role.bedrock_agent_hashicorp_asst.name
+  role = aws_iam_role.bedrock_agent_sample_asst.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

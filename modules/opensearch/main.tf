@@ -1,4 +1,4 @@
-resource "aws_opensearchserverless_access_policy" "hashicorp_kb" {
+resource "aws_opensearchserverless_access_policy" "sample_kb" {
   name = var.kb_oss_collection_name
   type = "data"
   policy = jsonencode([
@@ -39,7 +39,7 @@ resource "aws_opensearchserverless_access_policy" "hashicorp_kb" {
 }
 
 
-resource "aws_opensearchserverless_security_policy" "hashicorp_kb_encryption" {
+resource "aws_opensearchserverless_security_policy" "sample_kb_encryption" {
   name = var.kb_oss_collection_name
   type = "encryption"
   policy = jsonencode({
@@ -55,7 +55,7 @@ resource "aws_opensearchserverless_security_policy" "hashicorp_kb_encryption" {
   })
 }
 
-resource "aws_opensearchserverless_security_policy" "hashicorp_kb_network" {
+resource "aws_opensearchserverless_security_policy" "sample_kb_network" {
   name = var.kb_oss_collection_name
   type = "network"
   policy = jsonencode([
@@ -79,27 +79,27 @@ resource "aws_opensearchserverless_security_policy" "hashicorp_kb_network" {
   ])
 }
 
-resource "aws_opensearchserverless_collection" "hashicorp_kb" {
+resource "aws_opensearchserverless_collection" "sample_kb" {
   name = var.kb_oss_collection_name
   type = "VECTORSEARCH"
   depends_on = [
-    aws_opensearchserverless_access_policy.hashicorp_kb,
-    aws_opensearchserverless_security_policy.hashicorp_kb_encryption,
-    aws_opensearchserverless_security_policy.hashicorp_kb_network
+    aws_opensearchserverless_access_policy.sample_kb,
+    aws_opensearchserverless_security_policy.sample_kb_encryption,
+    aws_opensearchserverless_security_policy.sample_kb_network
   ]
 }
 
 provider "opensearch" {
-  url         = aws_opensearchserverless_collection.hashicorp_kb.collection_endpoint
+  url         = aws_opensearchserverless_collection.sample_kb.collection_endpoint
   healthcheck = false
 }
 
 resource "time_sleep" "wait_before_index_creation" {
-  depends_on      = [aws_opensearchserverless_collection.hashicorp_kb]
+  depends_on      = [aws_opensearchserverless_collection.sample_kb]
   create_duration = "60s" # Wait for 60 seconds before creating the index
 }
 
-resource "opensearch_index" "hashicorp_kb" {
+resource "opensearch_index" "sample_kb" {
   name                           = var.index_name
   number_of_shards               = "2"
   number_of_replicas             = "0"

@@ -1,13 +1,13 @@
 variable "kb_s3_bucket_name_prefix" {
   description = "The name prefix of the S3 bucket for the data source of the knowledge base."
   type        = string
-  default     = "hashicorp-kb"
+  default     = "sample-kb"
 }
 
 variable "kb_oss_collection_name" {
   description = "The name of the OpenSearch Service (OSS) collection for the knowledge base."
   type        = string
-  default     = "bedrock-hashicorp-kb"
+  default     = "bedrock-sample-kb"
 }
 
 variable "kb_model_id" {
@@ -19,7 +19,7 @@ variable "kb_model_id" {
 variable "kb_name" {
   description = "The name of the knowledge base."
   type        = string
-  default     = "hashicorp"
+  default     = "sample"
 }
 
 variable "agent_model_id" {
@@ -31,25 +31,25 @@ variable "agent_model_id" {
 variable "agent_name" {
   description = "The name of the agent."
   type        = string
-  default     = "hashicorpAssistant"
+  default     = "sampleAssistant"
 }
 
 variable "agent_desc" {
   description = "The description of the agent."
   type        = string
-  default     = "An assistant that provides HashiCorp information."
+  default     = "An assistant that provides sample information."
 }
 
 variable "action_group_name" {
   description = "The name of the action group."
   type        = string
-  default     = "hashicorpAPI"
+  default     = "sampleAPI"
 }
 
 variable "action_group_desc" {
   description = "The description of the action group."
   type        = string
-  default     = "An action group that provides HashiCorp information."
+  default     = "An action group that provides sample information."
 }
 
 variable "subnet_ids" {

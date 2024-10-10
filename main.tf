@@ -7,11 +7,11 @@ module "s3_bucket" {
 #Create bucket for custom model
 module "custom_model_bucket" {
   source      = "./modules/s3"
-  bucket_name = "hashicorp-model-training-${local.region_short}-${local.account_id}"
+  bucket_name = "sample-model-training-${local.region_short}-${local.account_id}"
 }
 
 # Knowledge base resource role
-module "hashicorp_iam" {
+module "sample_iam" {
   source              = "./modules/iam"
   action_group_name   = var.action_group_name
   agent_name          = var.agent_name
@@ -25,13 +25,13 @@ module "hashicorp_iam" {
 module "custom-model-generation" {
   source                  = "./modules/custom-model"
   custom_model_bucket     = module.custom_model_bucket.bucket_name
-  bedrock_custom_role_arn = module.hashicorp_iam.bedrock_custom_role_arn
+  bedrock_custom_role_arn = module.sample_iam.bedrock_custom_role_arn
 }
 
 module "action_group_lambda" {
   source             = "./modules/lambda"
   action_group_name  = var.action_group_name
-  lambda_role_arn    = module.hashicorp_iam.lambda_role_arn
+  lambda_role_arn    = module.sample_iam.lambda_role_arn
   subnet_ids         = var.subnet_ids
   security_group_ids = var.security_group_ids
 }
@@ -39,7 +39,7 @@ module "action_group_lambda" {
 module "opensearch" {
   source                 = "./modules/opensearch"
   kb_oss_collection_name = var.kb_oss_collection_name
-  bedrock_role_arn       = module.hashicorp_iam.bedrock_role_arn
+  bedrock_role_arn       = module.sample_iam.bedrock_role_arn
   index_name             = "bedrock-knowledge-base-default-index"
 }
 
@@ -51,8 +51,8 @@ resource "time_sleep" "delay" {
 module "knowledge-base" {
   source                = "./modules/knowledge-base"
   kb_name               = var.kb_name
-  bedrock_role_arn      = module.hashicorp_iam.bedrock_role_arn
-  bedrock_role_name     = module.hashicorp_iam.bedrock_role_name
+  bedrock_role_arn      = module.sample_iam.bedrock_role_arn
+  bedrock_role_name     = module.sample_iam.bedrock_role_name
   kb_model_arn          = data.aws_bedrock_foundation_model.kb.model_arn
   opensearch_arn        = module.opensearch.opensearch_collection_arn
   s3_arn                = module.s3_bucket.arn
@@ -62,7 +62,7 @@ module "knowledge-base" {
 
 module "guardrails" {
   source = "./modules/guardrails"
-  name   = "hashicorp_guardrail"
+  name   = "sample_guardrail"
 }
 
 module "bedrock-agent" {
@@ -76,9 +76,9 @@ module "bedrock-agent" {
   kb_arn                  = module.knowledge-base.kb_arn
 }
 
-resource "terraform_data" "hashicorp_asst_prepare" {
+resource "terraform_data" "sample_asst_prepare" {
   triggers_replace = {
-    hashicorp_kb_state = sha256(jsonencode(module.knowledge-base))
+    sample_kb_state = sha256(jsonencode(module.knowledge-base))
   }
   provisioner "local-exec" {
     command = "aws bedrock-agent prepare-agent --agent-id ${module.bedrock-agent.agent_id}"

@@ -1,4 +1,4 @@
-resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_model" {
+resource "aws_iam_role_policy" "bedrock_kb_sample_kb_model" {
   name = "AmazonBedrockOSSPolicyForKnowledgeBase_${var.kb_name}"
   role = var.bedrock_role_name
   policy = jsonencode({
@@ -15,11 +15,11 @@ resource "aws_iam_role_policy" "bedrock_kb_hashicorp_kb_model" {
 
 resource "time_sleep" "iam_consistency_delay" {
   create_duration = "120s"
-  depends_on      = [aws_iam_role_policy.bedrock_kb_hashicorp_kb_model]
+  depends_on      = [aws_iam_role_policy.bedrock_kb_sample_kb_model]
 }
 
 
-resource "aws_bedrockagent_knowledge_base" "hashicorp_kb" {
+resource "aws_bedrockagent_knowledge_base" "sample_kb" {
   name     = var.kb_name
   role_arn = var.bedrock_role_arn
   knowledge_base_configuration {
@@ -40,11 +40,11 @@ resource "aws_bedrockagent_knowledge_base" "hashicorp_kb" {
       }
     }
   }
-  depends_on = [time_sleep.iam_consistency_delay, aws_iam_role_policy.bedrock_kb_hashicorp_kb_model]
+  depends_on = [time_sleep.iam_consistency_delay, aws_iam_role_policy.bedrock_kb_sample_kb_model]
 }
 
-resource "aws_bedrockagent_data_source" "hashicorp_kb" {
-  knowledge_base_id = aws_bedrockagent_knowledge_base.hashicorp_kb.id
+resource "aws_bedrockagent_data_source" "sample_kb" {
+  knowledge_base_id = aws_bedrockagent_knowledge_base.sample_kb.id
   name              = "${var.kb_name}DataSource"
   data_source_configuration {
     type = "S3"

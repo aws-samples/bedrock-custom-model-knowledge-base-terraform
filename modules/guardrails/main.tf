@@ -1,9 +1,9 @@
 #guardrail
-resource "awscc_bedrock_guardrail" "hashicorp" {
+resource "awscc_bedrock_guardrail" "sample" {
   name                      = var.name
   blocked_input_messaging   = "Blocked input"
   blocked_outputs_messaging = "Blocked output"
-  description               = "hashicorp guardrail"
+  description               = "sample guardrail"
 
   content_policy_config = {
     filters_config = [
@@ -21,7 +21,7 @@ resource "awscc_bedrock_guardrail" "hashicorp" {
   }
 }
 
-resource "awscc_bedrock_guardrail_version" "hashicorp" {
-  guardrail_identifier = awscc_bedrock_guardrail.hashicorp.guardrail_id
-  description          = "hashicorp guardrail version"
+resource "awscc_bedrock_guardrail_version" "sample" {
+  guardrail_identifier = awscc_bedrock_guardrail.sample.guardrail_id
+  description          = "sample guardrail version"
 }

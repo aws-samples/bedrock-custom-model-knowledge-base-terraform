@@ -32,13 +32,13 @@ variable "action_group_lambda_arn" {
 variable "action_group_name" {
   description = "The name of the action group."
   type        = string
-  default     = "hashicorpAPI"
+  default     = "sampleAPI"
 }
 
 variable "action_group_desc" {
   description = "The description of the action group."
   type        = string
-  default     = "An assistant that provides hashicorp information."
+  default     = "An assistant that provides sample information."
 }
 
 variable "kb_arn" {
