@@ -4,7 +4,7 @@
 #http://aws.amazon.com/agreement or other written agreement between Customer and either
 #Amazon Web Services, Inc. or Amazon Web Services EMEA SARL or both.
 
-resource "aws_codestarconnections_connection" "bedrock-cn" {
-  name          = "bedrock-test-github-connection"
-  provider_type = "GitHub"
+output "connection_arn" {
+  value       = aws_codestarconnections_connection.bedrock-cn.arn
+  description = "List containing the arn of the CodeCommit repositories"
 }

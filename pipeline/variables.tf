@@ -9,11 +9,6 @@ variable "project_name" {
   type        = string
 }
 
-variable "create_new_repo" {
-  description = "Whether to create a new repository. Values are true or false. Defaulted to true always."
-  type        = bool
-  default     = true
-}
 
 variable "create_new_role" {
   description = "Whether to create a new IAM Role. Values are true or false. Defaulted to true always."
@@ -80,4 +75,9 @@ variable "build_project_source" {
   description = "aws/codebuild/standard:4.0"
   type        = string
   default     = "CODEPIPELINE"
+}
+
+variable "provider_type" {
+  type        = string
+  description = "Name of the external provider you are connecting to"
 }

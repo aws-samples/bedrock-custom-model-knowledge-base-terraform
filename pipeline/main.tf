@@ -9,7 +9,7 @@ terraform {
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = ">= 4.20.1"
     }
   }
@@ -34,19 +34,9 @@ module "s3_artifacts_bucket" {
 
 # Module for Infrastructure Source code repository
 module "codecommit_infrastructure_source_repo" {
-  source = "./modules/codecommit"
-
-  create_new_repo          = var.create_new_repo
-  source_repository_name   = var.source_repo_name
-  source_repository_branch = var.source_repo_branch
-  kms_key_arn              = module.codepipeline_kms.arn
-  tags = {
-    Project_Name = var.project_name
-    Environment  = var.environment
-    Account_ID   = local.account_id
-    Region       = local.region
-  }
-
+  source                 = "./modules/repo"
+  source_repository_name = var.source_repo_name
+  provider_type          = var.provider_type
 }
 
 # Module for Infrastructure Validation - CodeBuild
@@ -116,7 +106,7 @@ module "codepipeline_terraform" {
   codepipeline_role_arn = module.codepipeline_iam_role.role_arn
   stages                = var.stage_input
   kms_key_arn           = module.codepipeline_kms.arn
-  connection_arn = module.codecommit_infrastructure_source_repo.connection_arn
+  connection_arn        = module.codecommit_infrastructure_source_repo.connection_arn
   tags = {
     Project_Name = var.project_name
     Environment  = var.environment

@@ -36,7 +36,7 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "codepipeline_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeStarFullAccess" # Replace with required policy ARNs
-  role       = aws_iam_role.codepipeline_role.name
+  role       = aws_iam_role.codepipeline_role[0].name
 }
 resource "aws_iam_policy" "codepipeline_policy" {
   count       = var.create_new_role ? 1 : 0
