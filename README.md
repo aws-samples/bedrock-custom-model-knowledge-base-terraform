@@ -31,6 +31,13 @@ The solution uses the dataset `SohamNale/Banking_Dataset_for_LLM_Finetuning` and
 
 The training dataset is uploaded to an S3 bucket created as part of the stack and referenced as as the training data for the custome model training job. The job ,when finished fine tuning the foundation model ,creates a custom model which can be used using a provisioned throughput with a no commitment or term based commitment based on your choice.
 
+## Prerequisites
+
+You need to have an AWS account and an AWS Identity and Access Management (IAM) role and user with permissions to create and manage the necessary resources and components for this application. Before proceeding, if you have not previously done so, you must request access to the following Amazon Bedrock models:
+
+* Amazon: amazon.titan-embed-text-v1
+* Anthropic: anthropic.claude-3-haiku-20240307-v1:0
+
 > [!NOTE]
 > The current version of the sample does not have a complete version of the pipelines used in the current architecture. This note will be removed once the CodePipeline pipeline structure is updated in the repo.
 
