@@ -23,7 +23,7 @@ variable "codepipeline_iam_role_name" {
 }
 
 variable "source_repo_name" {
-  description = "Source repo name of the CodeCommit repository"
+  description = "Source repo name of the repository"
   type        = string
 }
 
