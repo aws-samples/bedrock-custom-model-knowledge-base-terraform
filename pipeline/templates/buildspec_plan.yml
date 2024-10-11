@@ -1,0 +1,30 @@
+#This solution, non-production-ready template describes AWS Codepipeline based CICD Pipeline for terraform code deployment.
+#© 2023 Amazon Web Services, Inc. or its affiliates. All Rights Reserved.
+#This AWS Content is provided subject to the terms of the AWS Customer Agreement available at
+#http://aws.amazon.com/agreement or other written agreement between Customer and either
+#Amazon Web Services, Inc. or Amazon Web Services EMEA SARL or both.
+
+version: 0.2
+
+env:
+  variables:
+    CODE_SRC_DIR: "."
+    TF_VERSION: "1.3.7"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - "curl -s -qL -o terraform.zip https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+      - "unzip -o terraform.zip"
+      - "mv terraform /bin"
+      - "rm terraform.zip"
+  build:
+    commands:
+      - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
+      - "echo ## TERRAFORM PLAN : Generate the Terraform Plan"
+      - "terraform plan -out tfapply"
+artifacts:
+  files:
+    - '**/*'
