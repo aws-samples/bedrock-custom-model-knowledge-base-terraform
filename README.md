@@ -1,9 +1,10 @@
 <!-- BEGIN_TF_DOCS -->
-# Customer Bedrock model deployment
+# Amazon Bedrock Custom Model deployment using Terraform
 
-![](./images/ML-Model-Deployment-Page-2.drawio.png)
+This repository contains sample code demonstrating how to use Terraform to provision Amazon Bedrock Custom Model with a sample dataset which answers some common banking questions for an existing or prospective customer.
 
-This repository contains sample code demonstrating how to use Terraform to provision a custom model using Bedrock with a dataset which answers some common banking questions for an existing or prospective customer.
+![](./images/Custom-Model-Deployment.png)
+
 
 The root Terraform module configuration provisions the below components into a subnet of your choice with the necessary security group attached.
 
