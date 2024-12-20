@@ -32,7 +32,8 @@ resource "aws_opensearchserverless_access_policy" "sample_kb" {
       ],
       Principal = [
         var.bedrock_role_arn,
-        data.aws_caller_identity.this.arn
+        data.aws_caller_identity.this.arn,
+        "arn:aws:sts::${data.aws_caller_identity.this.account_id}:assumed-role/bedrock-codepipeline-role/*"  
       ]
     }
   ])

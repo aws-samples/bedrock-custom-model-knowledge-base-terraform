@@ -45,7 +45,7 @@ module "opensearch" {
 
 resource "time_sleep" "delay" {
   depends_on      = [module.opensearch.opensearch_index_name]
-  create_duration = "60s" 
+  create_duration = "60s"
 }
 
 module "knowledge-base" {
@@ -57,7 +57,7 @@ module "knowledge-base" {
   opensearch_arn        = module.opensearch.opensearch_collection_arn
   s3_arn                = module.s3_bucket.arn
   opensearch_index_name = module.opensearch.opensearch_index_name
-  depends_on = [ time_sleep.delay ]
+  depends_on            = [time_sleep.delay]
 }
 
 module "guardrails" {

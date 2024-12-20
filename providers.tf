@@ -17,5 +17,12 @@ terraform {
       version = "~>3.0"
     }
   }
+  backend "s3" {
+    bucket = "statetest-s3"
+    key    = "pipeline"
+    region = "us-east-1"
+  }
   required_version = "~> 1.0"
 }
+
+

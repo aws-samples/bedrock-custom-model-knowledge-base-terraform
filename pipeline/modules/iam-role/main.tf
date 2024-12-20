@@ -32,8 +32,6 @@ EOF
   path               = "/"
 }
 
-# TO-DO : replace all * with resource names / arn
-
 resource "aws_iam_role_policy_attachment" "codepipeline_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeStarFullAccess" # Replace with required policy ARNs
   role       = aws_iam_role.codepipeline_role[0].name
@@ -43,75 +41,83 @@ resource "aws_iam_policy" "codepipeline_policy" {
   name        = "${var.project_name}-codepipeline-policy"
   description = "Policy to allow codepipeline to execute"
   tags        = var.tags
-  policy      = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
+  policy = jsonencode(
     {
-      "Effect":"Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:PutObjectAcl",
-        "s3:PutObject"
-      ],
-      "Resource": "${var.s3_bucket_arn}/*"
-    },
-    {
-      "Effect":"Allow",
-      "Action": [
-        "s3:GetBucketVersioning"
-      ],
-      "Resource": "${var.s3_bucket_arn}"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-         "kms:DescribeKey",
-         "kms:GenerateDataKey*",
-         "kms:Encrypt",
-         "kms:ReEncrypt*",
-         "kms:Decrypt"
-      ],
-      "Resource": "${var.kms_key_arn}"
-    },
-    		{
-			"Sid": "VisualEditor0",
-			"Effect": "Allow",
-			"Action": "codestar-connections:*",
-			"Resource": "*"
-		},
-    {
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild",
-        "codebuild:BatchGetProjects"
-      ],
-      "Resource": "arn:aws:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:project/${var.project_name}*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:CreateReportGroup",
-        "codebuild:CreateReport",
-        "codebuild:UpdateReport",
-        "codebuild:BatchPutTestCases"
-      ],
-      "Resource": "arn:aws:codebuild:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:report-group/${var.project_name}*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:log-group:*"
+      "Version" : "2012-10-17",
+      "Statement" : [
+
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "s3:CreateBucket",
+            "s3:List*",
+            "s3:Get*",
+            "s3:PutObject",
+            "s3:PutBucketPublicAccessBlock",
+            "s3:PutBucketVersioning",
+            "s3:PutEncryptionConfiguration",
+            "logs:CreateLogStream",
+            "bedrock:*",
+            "logs:*",
+            "aoss:*",
+            "lambda:AddPermission",
+            "lambda:CreateFunction",
+            "lambda:GetFunction",
+            "lambda:GetFunctionCodeSigningConfig",
+            "lambda:GetPolicy",
+            "lambda:ListVersionsByFunction",
+            "kms:Decrypt",
+            "kms:DescribeKey",
+            "kms:EnableKeyRotation",
+            "kms:GenerateDataKey",
+            "kms:GetKeyPolicy",
+            "kms:GetKeyRotationStatus",
+            "kms:ListResourceTags",
+            "kms:PutKeyPolicy",
+            "kms:TagResource",
+            "iam:AttachRolePolicy",
+            "iam:CreateRole",
+            "iam:CreateServiceLinkedRole",
+            "iam:GetRole",
+            "iam:GetRolePolicy",
+            "iam:ListAttachedRolePolicies",
+            "iam:ListRolePolicies",
+            "iam:PutRolePolicy",
+            "iam:CreatePolicy",
+            "iam:GetPolicy",
+            "iam:GetPolicyVersion",
+            "ec2:DescribeSecurityGroups",
+            "ec2:DescribeSubnets",
+            "ec2:DescribeVpcs",
+            "iam:ListPolicies",
+            "kms:CreateKey",
+            "sts:GetCallerIdentity",
+            "codestar:*",
+            "codestar-connections:*",
+            "codebuild:BatchGetBuilds",
+            "codebuild:StartBuild",
+            "codebuild:BatchGetProjects",
+            "codebuild:CreateReportGroup",
+            "codebuild:CreateReport",
+            "codebuild:UpdateReport",
+            "codebuild:BatchPutTestCases",
+            "cloudformation:CreateStack",
+            "cloudformation:DeleteStack",
+            "cloudformation:ListStacks",
+            "cloudformation:List*",
+            "cloudformation:GetResource*",
+            "cloudformation:DescribeStacks",
+            "cloudformation:UpdateStack",
+            "cloudformation:CreateResource",
+            "cloudformation:UpdateResource",
+            "iam:PassRole"
+          ],
+          "Resource" : "*"
+        }
+
+      ]
     }
-  ]
-}
-EOF
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "codepipeline_role_attach" {

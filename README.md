@@ -1,10 +1,9 @@
 <!-- BEGIN_TF_DOCS -->
-# Amazon Bedrock Custom Model deployment using Terraform
+# Customer Bedrock model deployment
 
-This repository contains sample code demonstrating how to use Terraform to provision Amazon Bedrock Custom Model with a sample dataset which answers some common banking questions for an existing or prospective customer.
+![](./images/ML-Model-Deployment-Page-2.drawio.png)
 
-![](./images/Custom-Model-Deployment.png)
-
+This repository contains sample code demonstrating how to use Terraform to provision a custom model using Bedrock with a dataset which answers some common banking questions for an existing or prospective customer.
 
 The root Terraform module configuration provisions the below components into a subnet of your choice with the necessary security group attached.
 
@@ -38,9 +37,6 @@ You need to have an AWS account and an AWS Identity and Access Management (IAM) 
 
 * Amazon: amazon.titan-embed-text-v1
 * Anthropic: anthropic.claude-3-haiku-20240307-v1:0
-
-> [!NOTE]
-> The current version of the sample does not have a complete version of the pipelines used in the current architecture. This note will be removed once the CodePipeline pipeline structure is updated in the repo.
 
 ## Requirements
 
@@ -90,8 +86,6 @@ You need to have an AWS account and an AWS Identity and Access Management (IAM) 
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | The list of security group IDs to be associated with the Lambda function. | `list(string)` | n/a | yes |
-| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnet IDs where the Lambda function will be deployed. | `list(string)` | n/a | yes |
 | <a name="input_action_group_desc"></a> [action\_group\_desc](#input\_action\_group\_desc) | The description of the action group. | `string` | `"An action group that provides sample information."` | no |
 | <a name="input_action_group_name"></a> [action\_group\_name](#input\_action\_group\_name) | The name of the action group. | `string` | `"sampleAPI"` | no |
 | <a name="input_agent_desc"></a> [agent\_desc](#input\_agent\_desc) | The description of the agent. | `string` | `"An assistant that provides sample information."` | no |
@@ -101,6 +95,8 @@ You need to have an AWS account and an AWS Identity and Access Management (IAM) 
 | <a name="input_kb_name"></a> [kb\_name](#input\_kb\_name) | The name of the knowledge base. | `string` | `"sample"` | no |
 | <a name="input_kb_oss_collection_name"></a> [kb\_oss\_collection\_name](#input\_kb\_oss\_collection\_name) | The name of the OpenSearch Service (OSS) collection for the knowledge base. | `string` | `"bedrock-sample-kb"` | no |
 | <a name="input_kb_s3_bucket_name_prefix"></a> [kb\_s3\_bucket\_name\_prefix](#input\_kb\_s3\_bucket\_name\_prefix) | The name prefix of the S3 bucket for the data source of the knowledge base. | `string` | `"sample-kb"` | no |
+| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | The list of security group IDs to be associated with the Lambda function. | `list(string)` | <pre>[<br>  "sg-123"<br>]</pre> | no |
+| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnet IDs where the Lambda function will be deployed. | `list(string)` | <pre>[<br>  "subnet-123"<br>]</pre> | no |
 
 ## Outputs
 

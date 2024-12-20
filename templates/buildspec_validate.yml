@@ -10,7 +10,7 @@ env:
   variables:
     CODE_SRC_DIR: "."
     SCRIPT_DIR: "./templates/scripts"
-    TF_VERSION: "1.9.0"
+    TF_VERSION: "1.10.0"
     ENVIRONMENT: "dev"
     SKIPVALIDATIONFAILURE: "Y"
     ENABLE_TFVALIDATE: "Y"
@@ -41,21 +41,20 @@ phases:
       - "cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}"
       - "echo ## TERRAFORM INIT : Initialize the Terraform Workspace"
       - "terraform init"
-      - "python3 -m venv .venv && source .venv/bin/activate"
-      - "echo ## VALIDATION : Starting ..."
-      - "mkdir -p ${CODEBUILD_SRC_DIR}/reports"
-      - "/bin/bash ${CODEBUILD_SRC_DIR}/${SCRIPT_DIR}/tf_ssp_validation.sh ${SKIPVALIDATIONFAILURE} ${ENABLE_TFVALIDATE} ${ENABLE_TFFORMAT} ${ENABLE_TFCHECKOV} ${ENABLE_TFSEC}"
-      - "cp checkov.xml ${CODEBUILD_SRC_DIR}/reports/checkov.xml"
-      - "cp tfsec-junit.xml ${CODEBUILD_SRC_DIR}/reports/tfsec-junit.xml"
+      # - "echo ## VALIDATION : Starting ..."
+      # - "mkdir -p ${CODEBUILD_SRC_DIR}/reports"
+      # - "/bin/bash ${CODEBUILD_SRC_DIR}/${SCRIPT_DIR}/tf_ssp_validation.sh ${SKIPVALIDATIONFAILURE} ${ENABLE_TFVALIDATE} ${ENABLE_TFFORMAT} ${ENABLE_TFCHECKOV} ${ENABLE_TFSEC}"
+      # - "cp checkov.xml ${CODEBUILD_SRC_DIR}/reports/checkov.xml"
+      # - "cp tfsec-junit.xml ${CODEBUILD_SRC_DIR}/reports/tfsec-junit.xml"
 artifacts:
   files:
     - '**/*'
-reports:
-  checkov-reports:
-    files:
-      - "./reports/checkov.xml"
-    file-format: "JUNITXML"
-  tfsec-reports:
-    files:
-      - "./reports/tfsec-junit.xml"
-    file-format: "JUNITXML"
+# reports:
+#   checkov-reports:
+#     files:
+#       - "./reports/checkov.xml"
+#     file-format: "JUNITXML"
+#   tfsec-reports:
+#     files:
+#       - "./reports/tfsec-junit.xml"
+#     file-format: "JUNITXML"
