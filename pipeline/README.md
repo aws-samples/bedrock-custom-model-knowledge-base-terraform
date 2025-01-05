@@ -8,6 +8,7 @@ The created pipeline uses the best practices for infrastructure validation and h
 Running these four stages ensures the integrity of the terraform configurations.
 
 
+## Before you start
 The deployed pipeline will fail on the first instance looking for an active connection to your VCS. The connection needs to be in an `Available` status before the pipeline execution can begin.
 
 ## Directory Structure

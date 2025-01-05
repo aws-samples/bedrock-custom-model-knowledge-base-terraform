@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# Customer Bedrock model deployment
+# Custom Bedrock model deployment
 
 ![](./images/ML-Model-Deployment-Page-2.drawio.png)
 
