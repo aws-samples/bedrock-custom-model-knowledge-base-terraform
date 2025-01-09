@@ -4,18 +4,6 @@
 #http://aws.amazon.com/agreement or other written agreement between Customer and either
 #Amazon Web Services, Inc. or Amazon Web Services EMEA SARL or both.
 
-terraform {
-  required_version = ">= 1.0.0"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.20.1"
-    }
-  }
-
-}
-
 #Module for creating a new S3 bucket for storing pipeline artifacts
 module "s3_artifacts_bucket" {
   source                = "./modules/s3"
@@ -34,8 +22,8 @@ module "s3_artifacts_bucket" {
 
 # Module for Infrastructure Source code repository
 module "source_repo" {
-  source                 = "./modules/repo"
-  provider_type          = var.provider_type
+  source        = "./modules/repo"
+  provider_type = var.provider_type
 }
 
 # Module for Infrastructure Validation - CodeBuild
@@ -79,7 +67,7 @@ module "codepipeline_iam_role" {
   source                     = "./modules/iam-role"
   project_name               = var.project_name
   create_new_role            = var.create_new_role
-  codepipeline_iam_role_name = var.create_new_role == true ? "${var.project_name}-codepipeline-role" : var.codepipeline_iam_role_name
+  codepipeline_iam_role_name = var.create_new_role == true ? "${var.project_name}-codepipeline-role" : var.codepipeline_iam_role_name 
   source_repository_name     = var.source_repo_name
   kms_key_arn                = module.codepipeline_kms.arn
   s3_bucket_arn              = module.s3_artifacts_bucket.arn

@@ -1,16 +1,16 @@
 resource "aws_s3_object" "v1_training_fine_tune" {
   bucket = var.custom_model_bucket
-  key    = "training_data_v1/${terraform_data.training_data_fine_tune_v1.output}"
-  source = terraform_data.training_data_fine_tune_v1.output
+  key    = "training_data_v1/banking_qa.jsonl"
+  source = "banking_qa.jsonl"
 }
 
-resource "terraform_data" "training_data_fine_tune_v1" {
-  input = "banking_qa.jsonl"
+# resource "terraform_data" "training_data_fine_tune_v1" {
+#   input = "banking_qa.jsonl"
 
-  provisioner "local-exec" {
-    command = "pip3 install datasets && python ${path.module}/bank_qa.py"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "pip3 install datasets && python ${path.module}/bank_qa.py"
+#   }
+# }
 
 resource "time_sleep" "iam_consistency_delay" {
   create_duration = "120s"
@@ -38,9 +38,9 @@ resource "aws_bedrock_custom_model" "cm_cohere_v1" {
   }
 
   training_data_config {
-    s3_uri = "s3://${var.custom_model_bucket}/training_data_v1/${terraform_data.training_data_fine_tune_v1.output}"
+    s3_uri = "s3://${var.custom_model_bucket}/training_data_v1/banking_qa.jsonl"
   }
-  depends_on = [aws_s3_object.v1_training_fine_tune, terraform_data.training_data_fine_tune_v1]
+  depends_on = [aws_s3_object.v1_training_fine_tune]
 }
 
 resource "random_integer" "suffix" {
